@@ -13,10 +13,10 @@
   - Allow inbound icmp, smtp, ssh, http, https
   - Allow inbound connections to unprivileged ports in the 8000-10000 range
   - Allow outbound connections to anywhere
-* To use custom rules, pass the ruleset to the iptables recipe
-  in an array. You need to pass the *entire* ruleset.
+* For custom rules, use the <tt>configure</tt> method before calling the 
+  <tt>iptables</tt> recipe. You will need to pass the *entire* ruleset.
   
-    recipe :iptables, { :rules => [
+    configure (:iptables => { :rules => [
       '-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT',
       '-A INPUT -p icmp -j ACCEPT',
       '-A INPUT -p tcp -m tcp --dport 53 -j ACCEPT',  # <-- Custom: Allowing DNS
@@ -27,4 +27,4 @@
       '-A INPUT -s 127.0.0.1 -j ACCEPT',
       '-A INPUT -p tcp -m tcp --dport 8000:10000 -j ACCEPT',
       '-A INPUT -p udp -m udp --dport 8000:10000 -j ACCEPT'
-    ]}
+    ]}}
