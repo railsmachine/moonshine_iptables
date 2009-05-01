@@ -13,20 +13,20 @@ describe Iptables do
     end
 
     it "ensures iptables is installed" do
-      @manifest.puppet_resources[Puppet::Type::Package].keys.should include('iptables')
+      @manifest.packages.keys.should include('iptables')
     end
 
     it "creates the iptables rules" do
-      @manifest.puppet_resources[Puppet::Type::File].keys.should include('/etc/iptables.rules')
+      @manifest.files.keys.should include('/etc/iptables.rules')
     end
 
     it "creates a script to load them on interface init" do
-      @manifest.puppet_resources[Puppet::Type::File].keys.should include('/etc/network/if-pre-up.d/iptables-restore')
+      @manifest.files.keys.should include('/etc/network/if-pre-up.d/iptables-restore')
     end
 
     it "loads the new iptables rules whenever they've been changed" do
-      @manifest.puppet_resources[Puppet::Type::Exec].keys.should include('iptables-restore < /etc/iptables.rules')
-      @manifest.puppet_resources[Puppet::Type::Exec]['iptables-restore < /etc/iptables.rules'].params[:refreshonly].value.should == true
+      @manifest.execs.keys.should include('iptables-restore < /etc/iptables.rules')
+      @manifest.execs['iptables-restore < /etc/iptables.rules'].refreshonly.should be_true
     end
   end
 
