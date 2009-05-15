@@ -31,7 +31,7 @@ private
     options = options.respond_to?(:to_hash) ? options.to_hash : {}
     options[:chains] ||= {}
     options[:chains] = {
-      :forward  => :accept,
+      :forward  => :drop,
       :input    => :drop,
       :output   => :accept
     }.merge(options[:chains])
