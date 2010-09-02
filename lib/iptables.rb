@@ -28,7 +28,7 @@ exit 0"""
 private
 
   def iptables_save(options = {})
-    options = options.respond_to?(:to_hash) ? options.to_hash : {}
+    options = options.respond_to?(:to_hash) ? options : {}
     options[:chains] ||= {}
     options[:chains] = {
       :forward  => :drop,
