@@ -5,7 +5,33 @@ class IptablesManifest < Moonshine::Manifest
   recipe :iptables
 end
 
+class IptablesWithRulesManifest < Moonshine::Manifest
+  include Iptables
+  rules = [
+    '-A INPUT -p icmp -j ACCEPT',
+    '-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT',
+    '-A INPUT -p tcp -m tcp --dport 25 -j ACCEPT',
+    '-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT',
+    '-A INPUT -p udp -m udp --dport 123 -j ACCEPT',
+    '-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT' ]
+  configure(:iptables => { :rules => rules })
+  recipe :iptables  
+end
+
 describe Iptables do
+
+  describe 'generated puppet sources with passed in configuration' do
+    before(:each) do
+      @manifest = IptablesWithRulesManifest.new
+      @manifest.send(:evaluate_recipes)
+    end
+    
+    it "should write out the passes in rules to disk" do
+      etc_rules = @manifest.files["/etc/iptables.rules"].content
+      etc_rules.should =~ /^:INPUT DROP/
+      etc_rules.should =~ /--dport 123/
+    end
+  end
 
   describe 'the generated puppet resources' do
     before(:each) do
