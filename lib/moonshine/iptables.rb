@@ -29,13 +29,11 @@ module Moonshine
   private
 
     def iptables_save(options = {})
-      options = options.respond_to?(:to_hash) ? options : {}
-      options[:chains] ||= {}
-      options[:chains] = {
+      options[:chains] = HashWithIndifferentAccess.new({
         :forward  => :drop,
         :input    => :drop,
         :output   => :accept
-      }.merge(options[:chains])
+      }).merge(options[:chains] || {})
 
       options[:rules] ||= [
         '-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT',

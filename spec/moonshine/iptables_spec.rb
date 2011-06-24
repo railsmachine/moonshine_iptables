@@ -37,13 +37,13 @@ describe Moonshine::Iptables do
 
     describe "with no configuration" do
       it "generates a default iptables-restore compatible config" do
-        config = @manifest.send(:iptables_save)
-        config.should =~ /^\*filter/
-        config.should =~ /^:INPUT DROP/
-        config.should =~ /^:FORWARD DROP/
-        config.should =~ /^:OUTPUT ACCEPT/
-        config.should =~ /^-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT/
-        config.should =~ /^COMMIT/
+        @manifest.iptables
+        @manifest.files['/etc/iptables.rules'].content.should =~ /^\*filter/
+        @manifest.files['/etc/iptables.rules'].content.should =~ /^:INPUT DROP/
+        @manifest.files['/etc/iptables.rules'].content.should =~ /^:FORWARD DROP/
+        @manifest.files['/etc/iptables.rules'].content.should =~ /^:OUTPUT ACCEPT/
+        @manifest.files['/etc/iptables.rules'].content.should =~ /^-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT/
+        @manifest.files['/etc/iptables.rules'].content.should =~ /^COMMIT/
       end
     end
     describe "with user provided chains and rules" do
@@ -51,10 +51,20 @@ describe Moonshine::Iptables do
         rules = [
           '-A INPUT -p icmp -j DROP'
         ]
-        config = @manifest.send(:iptables_save, { :chains => { :input => :accept }, :rules => rules })
-        config.should =~ /^:INPUT ACCEPT/
-        config.should =~ /^-A INPUT -p icmp -j DROP/
-        config.should_not =~ /-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT/
+        @manifest.iptables({
+          :chains => {
+            :forward  => :drop,
+            :input    => :accept,
+            :output   => :accept
+          },
+          :rules => [
+            '-A INPUT -s 65.54.241.206 -j DROP'
+          ]
+        })
+
+        @manifest.files['/etc/iptables.rules'].content.should =~ /^:INPUT ACCEPT/
+        @manifest.files['/etc/iptables.rules'].content.should =~ /-A INPUT -s 65.54.241.206 -j DROP/
+        @manifest.files['/etc/iptables.rules'].content.should_not =~ /-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT/
       end
     end
   end
