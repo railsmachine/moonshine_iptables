@@ -1,10 +1,10 @@
-require File.join(File.dirname(__FILE__), 'spec_helper.rb')
+require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
 class IptablesManifest < Moonshine::Manifest
-  plugin :iptables
+  include Moonshine::Iptables
 end
 
-describe Iptables do
+describe Moonshine::Iptables do
 
   describe 'the generated puppet resources' do
     before(:each) do
@@ -40,7 +40,7 @@ describe Iptables do
         config = @manifest.send(:iptables_save)
         config.should =~ /^\*filter/
         config.should =~ /^:INPUT DROP/
-        config.should =~ /^:FORWARD ACCEPT/
+        config.should =~ /^:FORWARD DROP/
         config.should =~ /^:OUTPUT ACCEPT/
         config.should =~ /^-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT/
         config.should =~ /^COMMIT/

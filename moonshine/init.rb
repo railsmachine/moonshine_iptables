@@ -1,3 +1,3 @@
-require "#{File.dirname(__FILE__)}/../lib/iptables.rb"
+require "#{File.dirname(__FILE__)}/../lib/moonshine/iptables.rb"
 
-include Iptables
+include Moonshine::Iptables
