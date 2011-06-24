@@ -2,7 +2,7 @@
 
 === A plugin for Moonshine[http://github.com/railsmachine/moonshine]
 
-This plugin installs and configues iptables for your server. Just include the
+This plugin installs and configures iptables for your server. Just include the
 plugin and recipe, deploy, and you'll have a nice secure system.
 By default, the firewall will:
   - Allow inbound ESTABLISHED and RELATED traffic
@@ -28,6 +28,5 @@ By default, the firewall will:
       '-A INPUT -p tcp -m tcp --dport 8000:10000 -j ACCEPT',
       '-A INPUT -p udp -m udp --dport 8000:10000 -j ACCEPT'
     ]})
-* Include the plugin and recipe in your Moonshine manifest.
-    plugin :iptables
+* Include the recipe in your Moonshine manifest.
     recipe :iptables
