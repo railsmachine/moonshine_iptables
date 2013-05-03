@@ -53,7 +53,7 @@ exit 0"""
 # your application manifest rather than here.\n
 CONTENT
       content << "*filter\n"
-      options[:chains].each do |chain, policy|
+      options[:chains].sort.each do |chain, policy|
         content << ":#{chain.to_s.upcase} #{policy.to_s.upcase} [0:0]\n"
       end
       options[:rules].each do |rule|
