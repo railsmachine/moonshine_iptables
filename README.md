@@ -1,6 +1,6 @@
-= Moonshine_Iptables
+# Moonshine_Iptables
 
-=== A plugin for Moonshine[http://github.com/railsmachine/moonshine]
+### A plugin for [Moonshine](http://github.com/railsmachine/moonshine)
 
 This plugin installs and configures iptables for your server. Just include the
 plugin and recipe, deploy, and you'll have a nice secure system.
@@ -11,11 +11,12 @@ By default, the firewall will:
   - Allow outbound connections to anywhere
   - Block everything else
 
-=== Instructions
+### Instructions
 
 * <tt>script/plugin install git://github.com/railsmachine/moonshine_iptables.git</tt>
 * To customize rules, use the <tt>configure</tt> method, passing the *entire* ruleset.
-  
+
+<pre><code>  
     configure(:iptables => { :rules => [
       '-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT',
       '-A INPUT -p icmp -j ACCEPT',
@@ -28,5 +29,10 @@ By default, the firewall will:
       '-A INPUT -p tcp -m tcp --dport 8000:10000 -j ACCEPT',
       '-A INPUT -p udp -m udp --dport 8000:10000 -j ACCEPT'
     ]})
+</code></pre>
+
 * Include the recipe in your Moonshine manifest.
-    recipe :iptables
+    <tt>recipe :iptables</tt>
+    
+***
+Unless otherwise specified, all content copyright &copy; 2014, [Rails Machine, LLC](http://railsmachine.com)
