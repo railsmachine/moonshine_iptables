@@ -4,23 +4,23 @@
 
 This plugin installs and configures iptables for your server. Just include the
 plugin and recipe, deploy, and you'll have a nice secure system.
+
 By default, the firewall will:
-  - Allow inbound ESTABLISHED and RELATED traffic
-  - Allow inbound icmp, smtp, ssh, http, https
-  - Allow inbound connections to unprivileged ports in the 8000-10000 range
-  - Allow outbound connections to anywhere
-  - Block everything else
+- Allow inbound ESTABLISHED and RELATED traffic
+- Allow inbound icmp, smtp, ssh, http, https
+- Allow inbound connections to unprivileged ports in the 8000-10000 range
+- Allow outbound connections to anywhere
+- Block everything else
 
 ### Instructions
 
 * <tt>script/plugin install git://github.com/railsmachine/moonshine_iptables.git</tt>
 * To customize rules, use the <tt>configure</tt> method, passing the *entire* ruleset.
-
 <pre><code>
 configure(:iptables => { :rules => [
   '-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT',
   '-A INPUT -p icmp -j ACCEPT',
-  '-A INPUT -p tcp -m tcp --dport 53 -j ACCEPT',  # <-- Custom: Allowing DNS
+  '-A INPUT -p tcp -m tcp --dport 53 -j ACCEPT',  # <== Custom: Allowing DNS
   '-A INPUT -p tcp -m tcp --dport 25 -j ACCEPT',
   '-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT',
   '-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT',
