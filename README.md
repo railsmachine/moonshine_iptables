@@ -20,7 +20,7 @@ By default, the firewall will:
   configure(:iptables => { :rules => [
     '-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT',
     '-A INPUT -p icmp -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 53 -j ACCEPT',  # <== Custom: Allowing DNS
+    '-A INPUT -p tcp -m tcp --dport 53 -j ACCEPT',
     '-A INPUT -p tcp -m tcp --dport 25 -j ACCEPT',
     '-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT',
     '-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT',
