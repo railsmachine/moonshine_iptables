@@ -16,19 +16,19 @@ By default, the firewall will:
 * <tt>script/plugin install git://github.com/railsmachine/moonshine_iptables.git</tt>
 * To customize rules, use the <tt>configure</tt> method, passing the *entire* ruleset.
 
-<pre><code>  
-    configure(:iptables => { :rules => [
-      '-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT',
-      '-A INPUT -p icmp -j ACCEPT',
-      '-A INPUT -p tcp -m tcp --dport 53 -j ACCEPT',  # <-- Custom: Allowing DNS
-      '-A INPUT -p tcp -m tcp --dport 25 -j ACCEPT',
-      '-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT',
-      '-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT',
-      '-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT',
-      '-A INPUT -s 127.0.0.1 -j ACCEPT',
-      '-A INPUT -p tcp -m tcp --dport 8000:10000 -j ACCEPT',
-      '-A INPUT -p udp -m udp --dport 8000:10000 -j ACCEPT'
-    ]})
+<pre><code>
+configure(:iptables => { :rules => [
+  '-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT',
+  '-A INPUT -p icmp -j ACCEPT',
+  '-A INPUT -p tcp -m tcp --dport 53 -j ACCEPT',  # <-- Custom: Allowing DNS
+  '-A INPUT -p tcp -m tcp --dport 25 -j ACCEPT',
+  '-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT',
+  '-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT',
+  '-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT',
+  '-A INPUT -s 127.0.0.1 -j ACCEPT',
+  '-A INPUT -p tcp -m tcp --dport 8000:10000 -j ACCEPT',
+  '-A INPUT -p udp -m udp --dport 8000:10000 -j ACCEPT'
+]})
 </code></pre>
 
 * Include the recipe in your Moonshine manifest.
