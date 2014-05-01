@@ -16,7 +16,7 @@ By default, the firewall will:
 
 * <tt>script/plugin install git://github.com/railsmachine/moonshine_iptables.git</tt>
 * To customize rules, use the <tt>configure</tt> method, passing the *entire* ruleset.
-
+<pre><code>
   configure(:iptables => { :rules => [
     '-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT',
     '-A INPUT -p icmp -j ACCEPT',
@@ -29,7 +29,7 @@ By default, the firewall will:
     '-A INPUT -p tcp -m tcp --dport 8000:10000 -j ACCEPT',
     '-A INPUT -p udp -m udp --dport 8000:10000 -j ACCEPT'
   ]})
-
+</code></pre>
 
 * Include the recipe in your Moonshine manifest.
     <tt>recipe :iptables</tt>
