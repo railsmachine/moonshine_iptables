@@ -4,14 +4,14 @@ module Moonshine
       package 'iptables', :ensure => :installed
       file '/etc/iptables.rules',
         :ensure   => :present,
-        :mode     => 744,
+        :mode     => '744',
         :owner    => 'root',
         :require  => package('iptables'),
         :content  => iptables_save(options)
 
       file '/etc/network/if-pre-up.d/iptables-restore',
         :ensure   => :present,
-        :mode     => 755,
+        :mode     => '755',
         :owner    => 'root',
         :require  => [
           package('iptables'),
